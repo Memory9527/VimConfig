@@ -1,3 +1,4 @@
+
 "激活pathogen"
 call pathogen#infect()
 call pathogen#helptags()
@@ -137,4 +138,12 @@ set noswapfile
 "使退格建正常处理indet，eol，start等如设置了set ai想删除所近必须由此选项"
 set backspace=start,indent,eol
 "switch buffers with Tab"
-map <F4> :NERDTreeToggle<CR>
+map <F3> :NERDTreeToggle<CR>
+"设置Tagbar快捷键"
+nmap <F4> :TagbarToggle<CR>
+"设置宽度默认为40"
+let g:tagbar_width = 40
+"自动打开"
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+set smartindent
+set expandtab
