@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>栏目 - 博客管理系统</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
+<script src="/static/admin/js/jquery-2.1.4.min.js"></script>
+<script src="/static/admin/js/bootstrap.min.js"></script>
+<script src="/static/admin/js/admin-scripts.js"></script>
+</head>
+
+<body>
+<section class="container-fluid">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="/">BlogCMS</a> </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="/admin/outLogin" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
+          </ul>
+          <form action="" method="post" class="navbar-form navbar-right" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">搜索</button>
+              </span> </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <aside class="col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/main">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/article">文章</a></li>
+        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/admin/category">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="/admin/flink">友情链接</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-lg-10 col-md-offset-2 main" id="main">
+      <div class="row">
+        <div class="col-md-5">
+          <h1 class="page-header">添加</h1>
+          <form  method="post" autocomplete="off">
+            <div class="form-group">
+              <label for="name">栏目名称</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
+              <span class="prompt-text">这将是它在站点上显示的名字。</span> </div>
+            <div class="form-group">
+              <label for="nickname">栏目别名</label>
+              <input type="text" id="nickname" name="alias" class="form-control" placeholder="在此处输入栏目别名" required autocomplete="off">
+              <span class="prompt-text">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span> </div>
+            <div class="form-group">
+              <label for="keywords">关键字</label>
+              <input type="text" id="keywords" name="keywords" class="form-control" placeholder="在此处输入栏目关键字" autocomplete="off">
+              <span class="prompt-text">关键字会出现在网页的keywords属性中。</span>
+            </div>
+            <input class="btn btn-primary" type="button" id="subCategory" name="submit" value="添加新栏目">
+          </form>
+        </div>
+        <div class="col-md-7">
+          <h1 class="page-header">管理</h1>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">ID</span></th>
+                  <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
+                  <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
+                  <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">总数</span></th>
+                  <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td></td>
+                <td><a href="/admin/article/undefined">未分类</a></td>
+                <td>无</td>
+                <td><?php echo $count ?></td>
+                <td></td>
+              </tr>
+              <?php foreach($category as $cat): ?>
+              <?php $i++ ?>
+                <tr>
+                  <td><?php echo $i; ?></td>
+                  <td><a href="/admin/article/<?php echo $cat['nickname']; ?>" title="<?php echo empty($cat['keywords']) ? '': $cat['keywords']; ?>">
+                    <?php echo $cat['name'] ?>
+                  </a>
+                  </td>
+                  <td><?php echo $cat['nickname']; ?></td>
+                  <td><?php echo $cat['num']; ?></td>
+                  <td><a href="/admin/updateCategory?id=<?php echo $cat['id']; ?>">修改</a> <a class="delcat" rel="<?php echo $cat['id']; ?>">删除</a></td>
+                </tr>
+              <?php endforeach?>
+              </tbody>
+            </table>
+            <h3><span id="error"></span></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

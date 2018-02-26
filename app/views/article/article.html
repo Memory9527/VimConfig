@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory9527的博客</title>
+<meta charset="utf-8"/>
+<meta name="description" content="技术博客用于记录php,nginx,Mysql的学习" />
+<meta name="keywords" content="技术博客,php,Web" />
+<meta name="author" content="杜霄" />
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="/static/article/css/bootstrap/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/article/css/article.css"/>
+<script src="/static/article/js/bootstrap/jquery.min.js"></script>
+<script src="/static/article/js/bootstrap/bootstrap.min.js"></script>
+<script src="/static/article/js/return_top.js"></script>
+</head>
+<body>
+<div class="go-top">
+	<div class="arrow"></div>
+	<div class="stick"></div>
+</div>
+<nav class="navbar  navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        	<button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#show-nav">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Memory的博客</a>
+			<div class="navbar-brand blank" ></div>
+			<div class="clean-searchbox">
+				<form action="/" method="get"  accept-charset="utf-8">
+					<input id="searchbox" value="<?php echo empty($keyword) ? '' : $keyword; ?>" name="keyword" type="text" placeholder="Search">
+					<button type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</form>
+			</div>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="show-nav">
+    	<ul class="nav navbar-nav navbar-right">
+    		<li class="active">
+    			<a href="/"><span class="glyphicon glyphicon-home"></span>首页</a>
+    		</li>
+			<?php foreach($cat as $c): ?>
+            <li>
+				<a href="/article/category/<?php echo $c['nickname']; ?>"><?php echo $c['name']; ?></a>
+			</li>
+			<?php endforeach?>
+       </ul>
+    </div>
+</nav>
+<div class="container">	
+<div class="row">
+	<div class="col-lg-8">
+		<?php if(empty($article)) {?>
+		<article id="nothing">
+			<h1>Nothing Found</h1>
+			<br>
+			It seems we can’t find what you’re looking for. Perhaps searching can help.
+		</article>
+		<?php }else{?>
+		<?php foreach($article as $art): ?>
+		<a href="/article/article_detail?id=<?php echo $art['id']; ?>">
+		<article class="blog_list">
+			<span class="label label-primary"><?php echo $catname[$art['cat_id']];?></span>
+			<h4><?php echo $art['title']; ?></h4>
+			<?php echo $art['content']; ?>
+		</article>
+		</a>
+		<?php endforeach ?>
+
+		<ul class="pagination pa">
+			<li class="<?php if($curr == '1') echo 'active';?>">
+				<a aria-label="Previous" <?php if($curr>'1') {?>
+				href="/article/article?page=<?php echo $curr-1; ?><?php echo empty($keyword) ? '' : "&keyword=$keyword"; ?>"<?php }?>
+				>
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+			</li>
+			<?php foreach($pages as $p):?>
+			<li class="<?php if($curr == $p) echo 'active';?>">
+				<a href="/article/article?page=<?php echo $p; ?><?php echo empty($keyword) ? '' : "&keyword=$keyword";?>">
+					<?php echo $p;?>
+				</a>
+			</li>
+			<?php endforeach ?>
+			<li class="<?php if($curr == $p) echo 'active';?>">
+				<a  aria-label="Next" <?php if($curr < $p) {?>
+				href="/article/article?page=<?php echo $curr+1; ?><?php echo empty($keyword) ? '' : "&keyword=$keyword" ?>"<?php }?>
+				>
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</li>
+		</ul>
+		<?php }?>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel">
+			<h4><span class="glyphicon glyphicon-time"></span>最新更新</h4>
+			<hr class="right_hr"/>
+			<div class="panel-body">
+				<ol>
+					<?php foreach($new as $n): ?>
+					<li>
+						<a href="/article/article_detail/blog_<?php echo $n['id']; ?>">
+							<?php echo $n['title']; ?>
+						</a>
+					</li>
+					<?php endforeach?>
+				</ol>
+			</div>
+		</div>
+		<div class="panel">
+			<h4><span class="glyphicon glyphicon-folder-open"></span> 分类</h4>
+			<hr class="right_hr"/>
+			<div class="panel-body">
+				<ul>
+					<?php foreach($cat as $c): ?>
+					<li>
+						<a href="/article/category/<?php echo $c['nickname']; ?>/" title="<?php echo $c['keywords']; ?>">
+							<?php echo $c['name']; ?>
+						</a>
+						<span>(<?php echo $c['num']; ?>)</span>
+					</li>
+					<?php endforeach?>
+				</ul>
+			</div>
+		</div>
+		<div class="panel">
+			<h4><span class="glyphicon glyphicon-heart-empty"></span>友情链接</h4>
+			<hr class="right_hr"/>
+			<div class="panel-body">
+				<ul>
+					<?php foreach($link as $l): ?>
+					<li>
+						<span class="glyphicon glyphicon-heart-empty"></span>
+						<a href="http://<?php echo $l['url']; ?>" title="<?php echo $l['keywords']; ?>">
+							<?php echo $l['name']; ?>
+						</a>
+					</li>
+					<?php endforeach?>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-lg-12">
+	<div id="footer">
+		<hr />
+		<ul class="list-inline">
+			Powered:
+			<li><a href="https://getbootstrap.com/">Bootstrap</a></li>
+			<li><a href="https://getbootstrap.com/">PHP</a></li>
+			<li> <a href="https://github.com/Memory9527" target="_blank">GitHub: Memory9527</a></li>
+
+		</ul>
+	</div>
+</div>
+</div>
+</body>
+</html>

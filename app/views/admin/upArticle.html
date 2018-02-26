@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>写文章 - 博客管理系统</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
+<script src="/static/admin/js/jquery-2.1.4.min.js"></script>
+<script src="/static/admin/js/admin-scripts.js"></script>
+<script src="/static/admin/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<section class="container-fluid">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="/">BlogCMS</a> </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/admin/outLogin" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+          </ul>
+          <form action="" method="post" class="navbar-form navbar-right" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">搜索</button>
+              </span> </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <aside class="col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/main">主页</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/admin/article">文章</a></li>
+        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/category">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="/admin/flink">友情链接</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-lg-10 col-md-offset-2 main" id="main">
+      <div class="row">
+        <form  method="post" >
+          <div class="col-md-9">
+            <h1 class="page-header">撰写新文章</h1>
+            <div class="form-group">
+              <label for="title" class="sr-only">标题</label>
+              <input type="text" id="title" name="title" class="form-control" placeholder="在此处输入标题"
+                 value="<?php echo empty($art['title']) ? '' : $art['title']; ?>"    required autofocus autocomplete="off">
+            </div>
+            <!--富文本编辑器-->
+            <script src="/static/admin/lib/ueditor/ueditor.config.js"></script>
+            <script src="/static/admin/lib/ueditor/ueditor.all.min.js"> </script>
+            <script type="text/javascript">
+              var ue = UE.getEditor('content',{
+                'initialFrameWidth':'100%'
+              });
+            </script>
+            <div class="form-group">
+              <script id="content"  name="content" type="text/plain"><?php echo empty($art['content']) ? '' : $art['content'];?></script>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <h1 class="page-header">操作</h1>
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>栏目</span></h2>
+              <div class="add-article-box-content">
+                <ul class="category-list">
+                  <?php foreach($category as $cat): ?>
+                  <li>
+                    <label>
+                      <input name="cat_id" title="<?php echo $cat['keywords']; ?>"  type="radio" value="<?php echo $cat['id']; ?>"
+                      <?php   if($cat['id'] == $art['cat_id']){ ?> checked <?php }?>
+                      >
+
+                      <?php echo $cat['name'];?><em class="hidden-md">( 栏目文章数: <span><?php echo $cat['num'];?></span> )</em></label>
+                  </li>
+                 <?php endforeach?>
+                </ul>
+              </div>
+              <div class="add-article-box-footer">
+                <input class="btn btn-primary" id="subArticle" type="button"  value="submit">
+                <span id="error"></span>
+                <input  type="hidden" id="art_id" name="id" value="<?php echo $art['id']; ?>">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

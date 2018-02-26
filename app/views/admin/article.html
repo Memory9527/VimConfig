@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文章 - 博客管理系统</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/style.css">
+<script src="/static/admin/js/jquery-2.1.4.min.js"></script>
+<script src="/static/admin/js/bootstrap.min.js"></script>
+<script src="/static/admin/js/admin-scripts.js"></script>
+</head>
+
+<body>
+<section class="container-fluid">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="/">BlogCMS</a> </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/admin/outLogin" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+          </ul>
+          <form action="" method="post" class="navbar-form navbar-right" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">搜索</button>
+              </span> </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <aside class="col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/main">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/admin/article">文章</a></li>
+        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/category">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="/admin/flink">友情链接</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+    <div class="col-lg-10 col-md-offset-2 main" id="main">
+      <form  method="post" >
+        <h1 class="page-header">操作</h1>
+        <ol class="breadcrumb">
+          <li><a href="/admin/addArticle">增加文章</a></li>
+        </ol>
+        <h1 class="page-header">管理 <span class="badge"><?php echo $count ?></span></h1>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">选择</span></th>
+                <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">标题</span></th>
+                <th><span class="glyphicon glyphicon-list"></span> <span class="visible-lg">栏目</span></th>
+                <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">日期</span></th>
+                <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php if(empty($article)) {?>
+            没有任何文章
+            <?php }else{?>
+          <?php foreach ($article as $art):?>
+            <tr>
+                <td><input type="checkbox" class="input-control" name="checkbox[]" value="<?php echo $art['id'];?>" /></td>
+                <td class="article-title"><?php echo $art['title']; ?></td>
+                <td>
+                  <a href="/admin/article/<?php echo is_array($catnick) ? $catnick[$art['cat_id']] : $catnick ;?>">
+                    <?php echo is_array($catname) ? $catname[$art['cat_id']] : $catname ;?>
+                  </a>
+                </td>
+                <td><?php echo $art['pubtime']; ?></td>
+                <td><a href="/admin/upArticle?id=<?php echo $art['id']; ?>">修改</a>
+                  <a class="delart" rel="<?php echo $art['id']; ?>">删除</a></td>
+              </tr>
+          <?php endforeach?>
+            <?php }?>
+            </tbody>
+          </table>
+        </div>
+        <footer class="message_footer">
+          <nav>
+            <div class="btn-toolbar operation" role="toolbar">
+              <div class="btn-group" role="group"> <a class="btn btn-default" onClick="select()">全选</a>
+                <a class="btn btn-default" onClick="reverse()">反选</a>
+                <a class="btn btn-default" onClick="noselect()">不选</a>
+              </div>
+              <div class="btn-group" role="group">
+                <input type="button" id="subdelete" class="btn btn-default"  title="删除全部选中" name="checkbox_delete" value="删除" />
+              </div>
+            </div>
+            <ul class="pagination pagenav">
+              <?php if(!empty($article)) {?>
+              <li class="<?php if($curr == '1') echo 'disabled';?>">
+                <a aria-label="Previous" <?php if($curr>'1') {?>
+                href="/admin/article<?php echo empty($param) ? '' : '//'.$param; ?>?page=<?php echo $curr-1; ?>"<?php }?>
+                >
+                  <span aria-hidden="true">&laquo;</span> </a> </li>
+              <?php foreach($pages as $p):?>
+              <li class="<?php if($curr == $p) echo 'active';?>">
+                <a href="/admin/article<?php echo empty($param) ? '' : '/'.$param; ?>?page=<?php echo $p; ?>">
+                  <?php echo $p;?></a></li>
+              <?php endforeach ?>
+              <li class="<?php if($curr == $p) echo 'disabled';?>">
+                <a  aria-label="Next" <?php if($curr < $p) {?>
+                href="/admin/article<?php echo empty($param) ? '' : '//'.$param; ?>?page=<?php echo $curr+1; ?>"<?php }?>
+                >
+                <span aria-hidden="true">&raquo;</span> </a>
+              </li>
+              <?php }?>
+            </ul>
+          </nav>
+        </footer>
+      </form>
+    </div>
+  </div>
+</section>
+</body>
+</html>

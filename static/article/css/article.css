@@ -1,0 +1,254 @@
+body{
+    font-family: "Microsoft Yahei","Helvetica Neue",Arial, Sans-serif;
+    white-space: normal !important;
+    word-wrap:break-word !important;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+    margin:0 auto!important;
+    padding: 0 auto!important;
+    background-color: #444;
+    background-image: url(/static/article/img/538031d8c9c1794a155d07b5847dc9b6.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+#content {
+    width: 100%;
+    background-color: rgba(34, 34, 34, 0.9);
+    color: #bbb;
+    text-align: left;
+    font-size: 16px;
+    overflow: hidden;
+    padding: 1em 1.5em 1em 1.5em;
+    margin-top: -1px;
+}
+@media (max-width: 767px) and (min-width: 481px) {
+    #content {
+        width: 100%;
+        background-color: rgba(34, 34, 34, 0.9);
+        color: #bbb;
+        text-align: left;
+        font-size: 16px;
+        overflow: hidden;
+        margin: 0;
+        padding: 0 0.8em 0.8em 0.8em;
+    }
+}
+#content h1 {
+    font-size: 24px;
+    color: #eee;
+}
+#content a:link {
+    color: #bbbbbb;
+    text-decoration: underline;
+}
+#content a:visited {
+    color: #dddddd;
+    text-decoration: underline;
+}
+#content a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.blog_info {
+    color: #666666;
+    font-size: 0.875em;
+}
+/*导航搜索栏*/
+.clean-searchbox{
+
+    float: right;
+    display: inline-block;
+    min-width: 210px;
+    margin-top: 10px;
+    color: #7b8690;
+}
+@media (max-width: 480px){
+
+    .clean-searchbox{
+        float: right;
+        display: inline-block;
+        min-width: 210px;
+        width: 100%;
+        margin-top: 10px;
+        color: #7b8690;
+    }
+    .searchfield{
+        width: 85%;
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 900px){
+    .blank{
+        width:300px;
+}
+}
+
+.keyword{
+    color: #ff0000;
+    position: inherit !important;
+}
+
+/*返回箭头*/
+div.go-top {
+    display: none;
+    opacity: 0.6;
+    z-index: 999999;
+    position: fixed;
+    bottom: 113px;
+    left: 90%;
+    margin-left: 40px;
+    border: 1px solid #000000;
+    width: 38px;
+    height: 38px;
+    background-color: rgb(51, 122, 183);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+div.go-top:hover {
+    opacity: 1;
+}
+
+div.go-top div.arrow {
+    position: absolute;
+    left: 10px;
+    top: -1px;
+    width: 0;
+    height: 0;
+    border: 9px solid transparent;
+    border-bottom-color: #FFFFFF;
+}
+
+div.go-top div.stick {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    width: 8px;
+    height: 14px;
+    display: block;
+    background-color: #FFFFFF;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+}
+
+/*主干*/
+.container-fluid:after{
+    display: none;
+}
+.row {
+    color: rgba(221, 221, 221, 0.77);
+}
+
+.row a{
+    text-decoration: none;
+    color: rgba(221, 221, 221, 0.77);
+}
+
+.row a h4{
+    margin-bottom: 15px;
+    color: #FFFFFF;
+}
+
+.row a:hover h4{
+    color: #178fe6;;
+}
+.blog_list,#nothing{
+    padding: 1.5rem 1.5rem 1.5rem 1rem;
+    background-color: rgba(34,34,34,0.9);
+    margin-bottom: 1em;
+    vertical-align: middle;
+    position: relative;
+}
+
+.blog_list span {
+    top: 0;
+    left: 0;
+    position: absolute;
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 0;
+}
+
+.blog_list:hover{
+    background-color: rgba(51,51,51,0.9);
+    border-left: 4px solid #3366cc;
+}
+
+
+/*右侧边*/
+.panel{
+    background-color: rgba(34,34,34,0.9);
+
+}
+
+.panel h4{
+    margin-left: 0.5em;
+}
+
+.panel a{
+    color:rgba(221, 221, 221, 0.77) ;
+}
+
+.panel a:hover{
+    color: #FFFFFF;
+}
+
+.right_hr {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    border-top: 2px solid #555;
+}
+
+
+
+/*页码*/
+.pagination > li >a{
+    background-color: rgba(51,51,51,0.9);
+    color: #DDDDDD;
+}
+.pagination li a{
+    border: none;
+}
+.pagination>.active>a,.pagination>li>a:hover{
+    color: #aaa;
+    background-color: #555555;
+}
+
+/*底部*/
+#footer{
+    margin-bottom: 3rem;
+    font-size: 1.4em;
+    color: #cacaca;
+    text-align: center;
+
+}
+
+#footer ul li {
+    border-right: #cacaca solid 1px;
+}
+#footer ul li:last-child {
+    border-right: none;
+}
+
+#footer>hr{
+    border-color: #CACACA;
+}
+#footer a{
+    text-decoration: none;
+    color: #CACACA;
+}
+#footer a:hover{
+    color: #57b8f1;
+}
+.list-inline>li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+}
